@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Portfolio</title>
+  <link rel="stylesheet" href="./assets/css/style.css">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar">
+  <div class="nav-left">
+    <a href="index.html" style="color: inherit; text-decoration: none;">Jose Lima</a>
+    <div class="subheading">Information Systems & Game Design @ CMU</div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="about.html">About Me</a></li>
+    <li><a href="portfolio.html">Portfolio</a></li>
+    <li><a href="joselima_resume.pdf">Resume</a></li>
+    <!-- <li><a href="contact.html">Contact</a></li> -->
+  </ul>
+</nav>
+
+    <!-- Hero Section -->
+  <header class="hero">
+    <h1>XR Motion Capture Pipeline</h1>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <section class="section">
+      <section class="section">
+    <p>
+      During the summer, I developed an <strong>XR motion capture pipeline</strong> at Carnegie Mellon University to support research on interaction techniques in extended reality. 
+      I began by studying common XR interactions and identified <strong>selection and manipulation</strong> as the most widely used. 
+      To test the capabilities of the Meta SDK, I built a small prototype where a keypad would randomly spawn within the user’s field of view and could be selected using a poking gesture. 
+      This exploration informed the direction of the larger project, which aimed to provide developers with a flexible pipeline to prototype and test new XR menu configurations.
+    </p>
+    <br>
+    <p>
+      A core part of the system involved integrating the <strong>OptiTrack motion capture system</strong> into Unity. 
+      This required setting up the OptiTrack plugin, configuring the Motive software, and working with a motion capture suit. 
+      Because OptiTrack and Unity use different coordinate systems, I implemented a <strong>three-point calibration method</strong> that relied on <strong>4x4 transformation matrices</strong> to align them accurately. 
+      This ensured that motion data collected from OptiTrack could be meaningfully combined with Unity’s XR environment.
+    </p>
+    <br>
+
+    <div class="video-container">
+      <iframe 
+        width="560" 
+        height="315" 
+        src="https://www.youtube.com/embed/TIzqZqqDJVU" 
+        title="Three Point Calibration Demo" 
+        frameborder="0" 
+        allowfullscreen>
+      </iframe>
+    </div>
+    <br>
+    <p>
+      Once the calibration system was in place, I designed and implemented a <strong>record and replay framework</strong>. 
+      The system logged transformation data from multiple sources — including OptiTrack skeletons, Meta Quest VR hands, and interactive objects like the keypad — into CSV files. 
+      To parse and reconstruct this data for replay, I used <strong>regular expressions</strong>, ensuring that each recorded session could be faithfully reproduced inside Unity. 
+      This made it possible for researchers to record motion capture sessions, play them back, and analyze user interactions with XR menus.
+    </p>
+    <br>
+    <div class="video-container">
+      <iframe 
+        width="560" 
+        height="315" 
+        src="https://www.youtube.com/embed/Z9LL5yLuEeo"
+        title="Replay Demo" -y-KAjiUnfs
+        frameborder="0" 
+        allowfullscreen>
+      </iframe>
+    </div>
+    <br>
+
+    <p>
+      In the fall semester, I extended the pipeline into a <strong>VR exercise training prototype</strong>. 
+      This system allowed users to select an exercise, observe a recorded avatar demonstrating the movement, and rotate the character for a clearer view of any joint being exercised. 
+      We presented this prototype to <strong>ASICS researchers</strong>, highlighting its potential applications for sports training and interactive fitness.
+    </p>
+    
+    <figure style="margin: 20px auto; text-align:center; max-width:80%;">
+      <img src="assets/images/ExercisePrototype.png" 
+          alt="Project showcase image" 
+          style="width:100%; border-radius:8px;">
+      <figcaption style="color:#aaa; font-size:0.9rem; margin-top:0.5rem;">
+        Prototype exercise application built with XR motion capture pipeline.
+      </figcaption>
+    </figure>
+</section>
+    </section>
+    <br>
+
+  </main>
+
+  
+
+<!-- Sticky Footer -->
+<footer>
+  <div class="footer-icons">
+    <a href="mailto:joselima@andrew.cmu.edu" aria-label="Email">
+      <img src="assets/icons/email.svg" alt="Email Icon" class="email"/>
+    </a>
+    <a href="https://www.linkedin.com/in/jose-l-b4a2132a8/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+      <img src="assets/icons/linkedin.svg" alt="LinkedIn Icon" class="linkedin" />
+    </a>
+    <a href="joselima_resume.pdf" target="_blank" rel="noopener noreferrer" aria-label="Resume">
+      <img src="assets/icons/resume.svg" alt="Resume Icon" class = "resume"/>
+    </a>
+  </div>
+</footer>
+
+</body>
+</html>

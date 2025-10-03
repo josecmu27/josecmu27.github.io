@@ -1,0 +1,349 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Make body full height and flex container */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #f5f5f5;
+  background-color: #1e1e1e;
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Main content grows to fill space */
+.main-content {
+  flex: 1;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2c2c2c;
+  padding: 1rem 2rem;
+}
+
+.nav-left {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.1rem;
+  color: white;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: white;
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 1px;
+}
+
+.nav-links a:hover {
+  opacity: 0.8;
+}
+
+.subheading {
+  font-size: 0.85rem;
+  color: #ccc;
+  font-family: 'Orbitron', sans-serif;
+  margin-top: 2px;
+}
+
+.button-link {
+  border: 1px solid white;
+  padding: 0.4rem 0.8rem;
+  border-radius: 3px;
+}
+
+.button-link:hover {
+  background-color: white;
+  color: #2c2c2c;
+  transition: 0.3s;
+}
+
+/* Hero section */
+.hero {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.hero h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  color: #ccc;
+}
+
+/* Section headings */
+.section h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.section p {
+  color: #ddd;
+}
+
+/* Portfolio */
+
+.projects {
+  text-align: center;
+  padding: 2rem;
+  color: white;
+}
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.project-card {
+  background-color: #222;
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: left;
+  padding-bottom: 1rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+}
+
+.project-card img {
+  width: 110%;
+  height: 300px;           /* same fixed height */
+  object-fit: cover;       /* crop the extra parts */
+  border-radius: 6px;      /* optional rounded corners */
+  display: block;
+}
+
+.project-title {
+  background: rgba(0,0,0,0.7);
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 0.5rem;
+  margin-top: -2.5rem;
+  position: relative;
+}
+
+.project-tags {
+  padding: 0.5rem 1rem;
+}
+
+.tag {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  margin: 0.25rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  color: white;
+}
+
+.tag.cplusplus { background: #173ac6; }
+.tag.csharp {background: #126227;}
+.tag.ruby {background: #9f1934;}
+.tag.unity { background: #3d128f; }
+.tag.unreal {background: #0a091c;}
+.tag.optitrack {background: #c75a1b;}
+
+.project-card p,
+.project-card ul {
+  padding: 0 1rem;
+  font-size: 0.9rem;
+}
+.project-card ul {
+  list-style: none;
+  padding-left: 1rem;
+}
+.project-card ul li::before {
+  content: "✔ ";
+  color: lightgreen;
+}
+
+
+
+/* Footer */
+footer {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #222;
+  display: flex;
+  justify-content: center;
+  align-items: center;    /* centers icons vertically */
+  z-index: 1000;
+}
+.footer-icons {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  align-items: flex-end; /* bottom-align icons */
+}
+
+.footer-icons img {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.footer-icons img.linkedin {
+  width: 36px;
+  height: 36px;
+  margin-bottom: 0px; /* nudge up or down */
+}
+
+.footer-icons img.resume {
+  width: 38px;
+  height: 38px;
+  margin-bottom: 0;
+}
+
+.footer-icons img.email {
+  width: 42px;
+  height: 42px;
+  margin-bottom: -4px;
+}
+
+.footer-icons img:hover {
+  transform: scale(1.1);
+}
+
+/* Project highlights (homepage only) */
+.highlights {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.highlight-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.highlight-card {
+  background-color: #222;
+  border-radius: 8px;
+  overflow: hidden;
+  padding: 1rem;
+  text-align: left;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+}
+
+.highlight-card img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+}
+
+.highlight-card h3 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+}
+
+.highlight-card p {
+  font-size: 0.9rem;
+  color: #ccc;
+  margin-bottom: 0.75rem;
+}
+
+.highlight-card h3 {
+  font-size: 1.5rem;  /* bigger text */
+  font-weight: bold;  /* bold */
+  margin: 0.5rem 0;   /* spacing around */
+}
+
+.highlight-card h3 a {
+  text-decoration: none;
+  color: white;       /* match your theme */
+}
+
+.portfolio-link {
+  text-decoration: none;   /* removes underline */
+  font-weight: bold;       /* makes it bold */
+  color: white;            /* match your site’s theme */
+}
+
+.portfolio-link:hover {
+  opacity: 0.8;            /* subtle hover effect */
+}
+
+.project-link {
+  text-decoration: none;  /* remove underline */
+  color: inherit;         /* use normal text color */
+  display: block;         /* make it behave like a container */
+}
+
+.project-link:hover {
+  opacity: 0.9;           /* subtle hover effect */
+}
+
+.section a {
+  text-decoration: none;
+  font-weight: bold;
+  color: #4da6ff; /* pick a highlight color that fits your theme */
+}
+
+.section a:hover {
+  opacity: 0.8;
+}
+
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 ratio */
+  height: 0;
+  overflow: hidden;
+}
+
+.video-container iframe,
+.video-container video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px; /* optional, matches your cards */
+}
+
+.image-center {
+  display: flex;
+  justify-content: center; /* horizontally center */
+  margin: 2rem 0;
+}
+
+.image-center img {
+  max-width: 100%; /* responsive */
+  height: auto;
+  border-radius: 8px; /* optional rounded corners */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5); /* optional shadow */
+}

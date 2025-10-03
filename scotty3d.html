@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Portfolio</title>
+  <link rel="stylesheet" href="./assets/css/style.css">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar">
+  <div class="nav-left">
+    <a href="index.html" style="color: inherit; text-decoration: none;">Jose Lima</a>
+    <div class="subheading">Information Systems & Game Design @ CMU</div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="about.html">About Me</a></li>
+    <li><a href="portfolio.html">Portfolio</a></li>
+    <li><a href="joselima_resume.pdf">Resume</a></li>
+    <!-- <li><a href="contact.html">Contact</a></li> -->
+  </ul>
+</nav>
+
+    <!-- Hero Section -->
+  <header class="hero">
+    <h1>Scotty 3D</h1>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <section class="section">
+      <p>
+      For my Computer Graphics course at Carnegie Mellon University, I worked on assignments in Scotty 3D, 
+      a C++ graphics engine developed for teaching rendering and geometry concepts. So far we have covered spanned foundational 
+      rendering techniques and interactive mesh editing.
+    </p>
+    <br>
+    <h3>Assignment 1: Rendering Foundations</h3>
+    <p>
+      The first assignment focused on building the rendering pipeline from the ground up. I implemented the 
+      transformation system that aligns object, parent, and world coordinates through a hierarchical scene graph. 
+      This allowed objects in the scene to move relative to their parents while maintaining a global world-space representation.
+    </p>
+
+    <p>
+      I then implemented rasterization techniques for rendering primitives such as lines and triangles. 
+      This included enforcing coverage rules, handling triangle winding, and introducing flat shading. 
+      Later, I extended these implementations to support perspective-correct interpolation for accurate 
+      texture mapping and attribute assignment.
+    </p>
+
+    <figure style="margin: 20px auto; text-align:center; max-width:80%;">
+      <img src="assets/images/A1T4-cubes-after.png" alt="Anti-Aliasing Before and After" 
+          style="width:100%; border-radius:8px;">
+      <figcaption style="color:#aaa; font-size:0.9rem; margin-top:0.5rem;">
+        After implementing triangle rasterization
+      </figcaption>
+    </figure>
+    <p>
+      To improve visual fidelity, I integrated depth testing and blending operations, 
+      enabling proper layering of objects and transparency effects. The final step was adding 
+      super-sampling to reduce aliasing, which produced smoother images by averaging multiple 
+      samples per pixel. Below is my render submission for this assignment. 
+    </p>
+
+    <figure style="margin: 20px auto; text-align:center; max-width:80%;">
+      <img src="assets/images/render.png" alt="Anti-Aliasing Before and After" 
+          style="width:100%; border-radius:8px;">
+      <figcaption style="color:#aaa; font-size:0.9rem; margin-top:0.5rem;">
+        Render Submission for Assignment 1
+      </figcaption>
+    </figure>
+
+    <h3>Assignment 2: Mesh Editing</h3>
+    <p>
+      The second assignment introduced interactive mesh editing through the halfedge data structure. 
+      I developed local operations such as edge flips and edge splits, enabling the user to restructure meshes 
+      while preserving valid connectivity.
+    </p>
+
+    <div style="display:flex; justify-content:center; gap:30px; flex-wrap:wrap; margin:20px 0;">
+  
+  <!-- Before Flip -->
+  <figure style="flex:0 0 45%; text-align:center;">
+    <img src="assets/images/BeforeFlip.png" alt="Before Edge Flip" 
+         style="width:100%; height:300px; object-fit:cover; border-radius:8px;">
+    <figcaption style="color:#aaa; font-size:0.9rem; margin-top:0.5rem;">Before Edge Flip</figcaption>
+  </figure>
+
+  <!-- After Flip -->
+  <figure style="flex:0 0 45%; text-align:center;">
+    <img src="assets/images/AfterFlip.png" alt="After Edge Flip" 
+         style="width:100%; height:300px; object-fit:cover; border-radius:8px;">
+    <figcaption style="color:#aaa; font-size:0.9rem; margin-top:0.5rem;">After Edge Flip</figcaption>
+  </figure>
+
+</div>
+    <p>
+      I then added edge collapse and triangulation tools, which allowed simplification and 
+      reorganization of faces. These operations formed the foundation for more advanced mesh 
+      modifications.
+    </p>
+
+    <div style="display:flex; justify-content:center; gap:30px; flex-wrap:wrap; margin:20px 0;">
+
+  <!-- Before Collapse -->
+  <figure style="flex:0 0 45%; text-align:center;">
+    <img src="assets/images/BeforeCollapse.png" alt="Before Edge Collapse" 
+         style="width:100%; height:300px; object-fit:cover; border-radius:8px;">
+    <figcaption style="color:#aaa; font-size:0.9rem; margin-top:0.5rem;">Before Edge Collapse</figcaption>
+  </figure>
+
+  <!-- After Collapse -->
+  <figure style="flex:0 0 45%; text-align:center;">
+    <img src="assets/images/AfterCollapse.png" alt="After Edge Collapse" 
+         style="width:100%; height:300px; object-fit:cover; border-radius:8px;">
+    <figcaption style="color:#aaa; font-size:0.9rem; margin-top:0.5rem;">After Edge Collapse</figcaption>
+  </figure>
+
+</div>
+    <p>
+      I am currently working on linear subdivison and Catmull-Clark subdivision, and others. 
+      I will update this page as I make progress throughout this course. 
+  
+    </p>
+
+
+    </section>
+    <br>
+
+  </main>
+
+  
+
+<!-- Sticky Footer -->
+<footer>
+  <div class="footer-icons">
+    <a href="mailto:joselima@andrew.cmu.edu" aria-label="Email">
+      <img src="assets/icons/email.svg" alt="Email Icon" class="email"/>
+    </a>
+    <a href="https://www.linkedin.com/in/jose-l-b4a2132a8/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+      <img src="assets/icons/linkedin.svg" alt="LinkedIn Icon" class="linkedin" />
+    </a>
+    <a href="joselima_resume.pdf" target="_blank" rel="noopener noreferrer" aria-label="Resume">
+      <img src="assets/icons/resume.svg" alt="Resume Icon" class = "resume"/>
+    </a>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Portfolio</title>
+  <link rel="stylesheet" href="./assets/css/style.css">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar">
+  <div class="nav-left">
+    <a href="index.html" style="color: inherit; text-decoration: none;">Jose Lima</a>
+    <div class="subheading">Information Systems & Game Design @ CMU</div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="about.html">About Me</a></li>
+    <li><a href="portfolio.html">Portfolio</a></li>
+    <li><a href="joselima_resume.pdf">Resume</a></li>
+    <!-- <li><a href="contact.html">Contact</a></li> -->
+  </ul>
+</nav>
+
+    <!-- Hero Section -->
+  <header class="hero">
+    <h1>Roi Du Pain</h1>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <section class="section">
+    <p>
+      For this multi-phase course project, I helped build <strong>Roi du Pain</strong>, an online ordering system for a bakery using
+      <strong>Rails 7.0.4</strong> and <strong>Ruby 3.1.4</strong> with a strong emphasis on <strong> Model-View-Controller (MVC) design and </strong><strong>Test-Driven development (TDD)</strong>.
+    </p>
+
+    <br>
+    <h3>Models, Business Logic, and Authorization</h3>
+    <p>
+      I implemented the domain models based on the provided ERD and added the required business logic and validations. I wrote comprehensive
+      <strong>unit tests</strong> for every model method and used <strong>SimpleCov</strong> to ensure <strong>100% test coverage</strong>.
+      I also implemented <strong>authentication</strong> and <strong>role-based authorization
+      so customers, bakers, shippers, and managers each had the correct permissions. Furthermore, I implemented two service objects: a
+      <strong>baking service</strong> (daily baking lists), and a <strong>shipping service</strong> (shipping cost calculator).
+    </p>
+
+    <!-- Image: Coverage -->
+    <figure class="image-center" style="margin: 1.25rem 0;">
+      <img src="assets/images/TestCoverage.png" alt="SimpleCov coverage report at 100%">
+      <figcaption style="color:#aaa; font-size:0.9rem; margin-top:0.5rem;"></figcaption>
+    </figure>
+
+    <h3>Controllers, Views, and API's</h3>
+    <p>
+      Building on the model layer, I focused on the <strong>controllers</strong> and <strong>views</strong> to have a proper front-end.
+      The course supplied a full set of controller specs and view test, thus I coded the controllers to <strong>pass all tests at 100% coverage</strong>
+      and verified the view's end-to-end behavior with Cucumber scenarios. I also created <strong>API endpoints</strong>, returning the exact
+      <strong>JSON</strong> shapes specified. For the front end, I implemented the key customer-facing views (catalog, search, cart, checkout) while following design principles.
+    </p>
+
+    <div style="display:flex; justify-content:center; gap:30px; flex-wrap:wrap; margin: 1.25rem 0;">
+  
+  <!-- Image: UI/Views -->
+  <figure style="flex:0 0 45%; text-align:center;">
+    <img src="assets/images/Items.png" alt="Catalog View" 
+         style=" height:350px; object-fit:cover; border-radius:8px;">
+    <figcaption style="color:#aaa; font-size:0.9rem; margin-top:0.5rem;">Catalog View</figcaption>
+  </figure>
+
+  <!-- Image: UI/Views -->
+  <figure style="flex:0 0 45%; text-align:center;">
+    <img src="assets/images/Cart.png" alt="Cart View" 
+         style=" height:350px; object-fit:cover; border-radius:8px;">
+    <figcaption style="color:#aaa; font-size:0.9rem; margin-top:0.5rem;">Cart View</figcaption>
+  </figure>
+
+</div>
+
+    <h3>Process & Iteration</h3>
+    <p>
+      The project was structured with incremental checkpoints to encourage a professional workflow. Early milestones focused on building working API endpoints, followed by
+      full controller and view implementation with 100% test coverage. Each phase required delivering features on time, integrating them with the existing system, and verifying them
+      against both unit and end-to-end tests. This process reinforced best practices in test-driven development, incremental delivery, and proper version control via git. 
+    </p>
+
+  <div style="display:flex; justify-content:center; gap:30px; flex-wrap:wrap; margin: 1.25rem 0;">
+
+
+</div>
+  </section>
+    </section>
+    <br>
+
+  </main>
+
+  
+
+<!-- Sticky Footer -->
+<footer>
+  <div class="footer-icons">
+    <a href="mailto:joselima@andrew.cmu.edu" aria-label="Email">
+      <img src="assets/icons/email.svg" alt="Email Icon" class="email"/>
+    </a>
+    <a href="https://www.linkedin.com/in/jose-l-b4a2132a8/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+      <img src="assets/icons/linkedin.svg" alt="LinkedIn Icon" class="linkedin" />
+    </a>
+    <a href="joselima_resume.pdf" target="_blank" rel="noopener noreferrer" aria-label="Resume">
+      <img src="assets/icons/resume.svg" alt="Resume Icon" class = "resume"/>
+    </a>
+  </div>
+</footer>
+
+</body>
+</html>
