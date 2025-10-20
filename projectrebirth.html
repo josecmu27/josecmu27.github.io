@@ -36,18 +36,52 @@
         Project Rebirth is a post-apocalyptic action-narrative game where a lone bionic girl roams through massive, desolate megastructures. 
         The story unfolds through the world itself - atmosphere, level design, and fleeting encounters. This project is being developed via the CMU Game
         Creation Society where students form teams to develop video games throughout a semester. I am currently working in a team of 12+ people 
-        and we are currently working for our first alpha showcase next week 10/10/2025, 
-        I will update this page as we continue making progress throughout this semester. Stay tunned!
+        and we are currently working for our beta showcase in approximately two weeks.
 
       </p>
       <br>
       <p>
-        Currently, I have been assigned to design and develop the puzzles. After next week's alpha showcase, I'll showcase my work below here:
+        Currently, I have been assigned to design and develop the puzzles. Taking inspiration from games such as The Legend of Zelda, I proposed a balancing puzzle where
+        the player will have to pick up and throw boxes to scale platforms to lift themselves up to reach a key box to unlock the next room. Here is the design I came up with:
+      </p>
+      <br>
+      <figure style="flex:0 0 45%; text-align:center;">
+        <img src="assets/images/BalancePuzzleDesign.jpg" alt="Catalog View" 
+            style=" height:350px; object-fit:cover; border-radius:8px;">
+        <figcaption style="color:#aaa; font-size:0.9rem; margin-top:0.5rem;">Puzzle Design</figcaption>
+      </figure>
+      <br>
+      <p>
+        The balancing puzzle is built around a hierarchical system of interconnected platforms, structured like a binary tree.
+        Each scale platform can have up to two sub-platforms — a left and a right. The system dynamically adjusts:
+        when one sub-platform becomes heavier than the other, the heavier side lowers while the lighter side rises.
 
-       <!-- <div class="image-center">
-        <img src="assets/images/ExercisePrototype.png" alt="Project showcase image">
-      </div> -->
+        The player must strategically manipulate the system by picking up and throwing weighted boxes onto different platforms to alter their balance.
+        By redistributing weight, the player can ascend through the levels of the tree, solving the puzzle to reach higher areas.
 
+        Right now I have been able to implement the platforms reacting to box and player collisions and properly updating the weight of each platform.
+        Here is a video showcasing my progress
+
+      </p>
+      <br>
+       <div class="video-container">
+      <iframe 
+        width="560" 
+        height="315" 
+        src="https://www.youtube.com/embed/yygaSmkjax0" 
+        title="Puzzle Demo" 
+        frameborder="0" 
+        allowfullscreen>
+      </iframe>
+    </div>
+    <br>
+      <p>
+       I am currently collaborating with team members responsible for implementing player interactions—such as picking up and throwing boxes—and for programming 
+       the chain platform movement. I will continue developing the remaining puzzle mechanics, including the box key and target interactions, and addressing edge 
+       cases in the current system
+      </p>
+
+      
     </section>
     <br>
 
