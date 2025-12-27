@@ -121,15 +121,143 @@
   </figure>
 
 </div>
-    <p>
-      I am currently working on linear subdivison and Catmull-Clark subdivision, and others. 
-      I will update this page as I make progress throughout this course. 
-  
-    </p>
+  <p>
+    Building on the foundational mesh operations from Assignment 2, I implemented Loop subdivision, an approximating subdivision scheme 
+    specifically designed for triangle meshes. Unlike linear and Catmull-Clark subdivision, Loop subdivision required using local mesh operations—edge 
+    splits and flips—to achieve smooth surface refinement.
+  </p>
+  <br>
+  <p>
+    A critical implementation detail was computing all new vertex positions before modifying any connectivity. I stored these in temporary data 
+    structures (`vertex_new_pos` and `edge_new_pos`) to prevent averaging already-averaged values, which would produce incorrect results. The implementation successfully produces 
+    smooth approximations of the original mesh geometry. Each iteration quadruples the triangle count while progressively smoothing sharp features, converging toward a limit surface
+    that faithfully represents the coarse input with enhanced detail and smoothness.
+  </p>
+  <div style="display:flex; justify-content:center; gap:30px; flex-wrap:wrap; margin:20px 0;">
+    <figure style="flex:0 0 100%; text-align:center;">
+      <img src="assets/images/LoopSubdivisionShowcase.png" alt="Loop Subdivision" 
+          style="width:100%; height:100%; object-fit:contain; border-radius:8px;">
+      <figcaption style="color:#aaa; font-size:0.9rem; margin-top:0.5rem;">Loop Subdivision Showcase </figcaption>
+    </figure>
+  </div>
+  <br>
+  <h3> Assignment 3: Pathtracing</h3>
+  <p>
+     Path tracing follows light as it bounces off multiple surfaces before reaching the camera, enabling global illumination 
+     effects like color bleeding, soft shadows, and realistic reflections. This involved implementing both material models and 
+     acceleration structures to make rendering practical.
+  </p>
+  <br>
+  <h4> Material Models & BSDF Implementation </h4>
+  <p>
+    I began by implementing the Lambertian material, which models diffuse surfaces that scatter 
+    light equally in all directions. The implementation required three key functions: scatter to randomly sample 
+    outgoing light directions, evaluate to compute the ratio of outgoing to incoming radiance, and pdf to calculate the probability 
+    density function for those samples.
+    A critical detail was handling the cosine term in the rendering equation. Traditional BSDFs operate on the ratio of 
+    radiance to irradiance, but Scotty3D's BSDFs work purely with radiance, requiring careful scaling. I used cosine-weighted 
+    hemisphere sampling to importance sample directions, which naturally biases samples toward directions that contribute more to the final result
+  </p>
+  <br>
+  <h4> Direct and Indirect Lighting </h4>
+  <p>
+    Path tracing separates lighting into direct and indirect components. Direct lighting comes from light sources without any bounces, while indirect lighting accounts for light that bounced off at least one surface before reaching the shading point.
+    For indirect lighting, I sample a random direction from the BSDF, trace a ray in that direction recursively, and accumulate the incoming light scaled by the BSDF attenuation. The recursion depth must be limited to prevent infinite bounces. For direct lighting, I used the same sampling approach but with depth set to zero to capture only the first intersection.
+    While it might seem redundant to separate these components, doing so enables more sophisticated direct light sampling strategies that significantly reduce noise in the final render.
+  </p>
+  <br>
+  <div style="display:flex; justify-content:center; gap:30px; flex-wrap:wrap; margin:20px 0;">
+    <figure style="flex:0 0 100%; text-align:center;">
+      <img src="assets/images/pathtracer_showcase.png" alt="Loop Subdivision" 
+          style="width:100%; height:100%; object-fit:contain; border-radius:8px;">
+      <figcaption style="color:#aaa; font-size:0.9rem; margin-top:0.5rem;">Pathtracer Showcase </figcaption>
+    </figure>
+  </div>
+  <br>
+  <h4> BVH Acceleration Structure </h4>
+  <p>
+    To make path tracing practical for complex scenes, I implemented a Bounding Volume Hierarchy (BVH) that dramatically accelerates ray-scene intersection tests. Without a BVH, every ray must test intersection against every primitive in the scene—an O(n) operation that becomes prohibitively expensive for detailed models.
+    The BVH organizes scene primitives into a tree structure where each node stores a bounding box that encloses all primitives in its subtree. I implemented the structure as an implicit tree stored in a vector, similar to heap data structures. Construction uses the Surface Area Heuristic to determine optimal split positions, balancing the tree for efficient traversal.
+    Key implementation details included proper bounding box intersection tests and carefully reordering primitives during construction so that each node's start and size fields correctly index into the primitive array. The BVH reduces intersection tests from O(n) to O(log n) on average, making complex scenes renderable in reasonable time
+  </p>
+  </section>
+  <br>
+  <div style="display:flex; justify-content:center; gap:30px; flex-wrap:wrap; margin:20px 0;">
+    <figure style="flex:0 0 100%; text-align:center;">
+      <img src="assets/images/bvh_showcase.png" alt="Loop Subdivision" 
+          style="width:100%; height:100%; object-fit:contain; border-radius:8px;">
+      <figcaption style="color:#aaa; font-size:0.9rem; margin-top:0.5rem;">BVH showcase </figcaption>
+    </figure>
+  </div>
 
+  <br>
+  <h3>Assignment 4: Animation</h3>
+  <p>
+    The fourth assignment focused on animating 3D characters through skeletal systems and deformation techniques. 
+    I implemented the complete animation pipeline from spline interpolation to skinning, enabling smooth character movement 
+    and realistic deformation.
+  </p>
+  <br>
+  <h4>Spline Interpolation</h4>
+  <p>
+    I began by implementing Catmull-Rom spline interpolation for smooth animation curves. Unlike linear interpolation, 
+    splines create smooth transitions between keyframes by computing cubic polynomial segments that pass through control points. 
+    The implementation required careful handling of tangent computation at each keyframe, using surrounding points to determine 
+    the curve's velocity and ensuring C1 continuity across segments.
+  </p>
+  <br>
+  <div style="display:flex; justify-content:center; gap:30px; flex-wrap:wrap; margin:20px 0;">
+    <figure style="flex:0 0 100%; text-align:center;">
+      <img src="assets/images/spline_showcase.png" alt="Loop Subdivision" 
+          style="width:100%; height:100%; object-fit:contain; border-radius:8px;">
+      <figcaption style="color:#aaa; font-size:0.9rem; margin-top:0.5rem;">Spline showcase </figcaption>
+    </figure>
+  </div>
 
-    </section>
-    <br>
+  <br>
+  <h4>Forward and Inverse Kinematics</h4>
+  <p>
+    The skeletal animation system required both forward kinematics (FK) and inverse kinematics (IK). For FK, I implemented 
+    hierarchical transformation matrices that propagate from parent bones to children, allowing animators to pose characters 
+    by directly rotating joints. The bind pose represents the rest configuration, while the current pose applies bone rotations 
+    to achieve the desired character position.
+  </p>
+  <p>
+    For IK, I implemented gradient descent optimization that automatically computes joint angles to reach target positions. 
+    This involved calculating the gradient of the squared distance function with respect to each bone's pose parameters, 
+    then iteratively adjusting rotations to minimize the error. IK is essential for animations like foot placement or hand 
+    reaching, where the end effector position is known but joint angles must be computed.
+  </p>
+  <br>
+  <h4>Linear Blend Skinning</h4>
+  <p>
+    The final component was linear blend skinning (LBS), which deforms mesh vertices based on skeletal motion. I first 
+    implemented automatic weight assignment by computing each vertex's distance to bone capsules in the bind pose. Vertices 
+    closer to a bone receive higher weights, with all weights normalized to sum to one.
+  </p>
+  <p>
+    The skinning algorithm then transforms each vertex by a weighted combination of bone transformations. For each bone 
+    influencing a vertex, I computed the bind-to-current transformation matrix and blended them according to the vertex's 
+    weights. A critical detail was transforming normals using the inverse transpose of the blended matrix to maintain 
+    correct lighting after deformation.
+  </p>
+  <p>
+    Key implementation challenges included working entirely in skeleton-local space (avoiding scaling issues), efficiently 
+    pre-computing bone positions to avoid redundant hierarchy traversals, and properly handling vertices with no bone weights 
+    (which remain stationary). The result is smooth, realistic character deformation that follows skeletal motion while 
+    preserving mesh volume and avoiding artifacts.
+  </p>
+  <br>
+  <div class="video-container">
+      <iframe 
+        width="560" 
+        height="315" 
+        src="https://www.youtube.com/embed/v03U2UqRTOE"
+        title="Final Submission"
+        frameborder="0" 
+        allowfullscreen>
+      </iframe>
+    </div>
 
   </main>
 
