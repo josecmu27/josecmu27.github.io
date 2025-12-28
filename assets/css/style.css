@@ -347,3 +347,13 @@ footer {
   border-radius: 8px; /* optional rounded corners */
   box-shadow: 0 4px 12px rgba(0,0,0,0.5); /* optional shadow */
 }
+
+.indented-list {
+  margin-left: 40px;
+  padding-left: 20px;
+}
+
+.double-indented-list {
+  margin-left: 60px;
+  padding-left: 20px;
+}

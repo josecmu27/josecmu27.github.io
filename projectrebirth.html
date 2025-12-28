@@ -42,7 +42,7 @@
       <br>
       <p>
         Currently, I have been assigned to design and develop the puzzles. Taking inspiration from games such as The Legend of Zelda, I proposed a balancing puzzle where
-        the player will have to pick up and throw boxes to scale platforms to lift themselves up to reach a key box to unlock the next room. Here is the design I came up with:
+        the player will have to pick up and throw boxes to scale platforms to lift themselves up to reach a higher area to unlock the next section of the level. Here is the first design I came up with:
       </p>
       <br>
       <figure style="flex:0 0 45%; text-align:center;">
@@ -59,12 +59,73 @@
         The player must strategically manipulate the system by picking up and throwing weighted boxes onto different platforms to alter their balance.
         By redistributing weight, the player can ascend through the levels of the tree, solving the puzzle to reach higher areas.
 
-        Right now I have been able to implement the platforms reacting to box and player collisions and properly updating the weight of each platform.
-        Here is a video showcasing my progress
+        The first version showed in the beta presentation the platforms were able to react to box collisions and properly update the weight of each platform.
 
       </p>
       <br>
-       <div class="video-container">
+      
+    </section>
+    <section class="section">
+  <p>
+    The balancing puzzle is built around a hierarchical system of interconnected platforms, structured like a binary tree.
+    Each scale platform can have up to two sub-platforms — a left and a right. When one sub-platform becomes heavier than the other, 
+    the heavier side lowers while the lighter side rises. Players manipulate the system by placing weighted boxes onto different platforms, 
+    redistributing weight to ascend through the levels and reach higher areas.
+  </p>
+  <br>
+  
+  <h3>Technical Implementation</h3>
+  
+  <h4>Interface-Based Weight System</h4>
+  <p>
+    I designed the system using a custom interface in C++, allowing any object (platforms, boxes, player) to participate in weight calculations. 
+    This interface-driven approach provides type flexibility and clean dependency management - platforms don't need to know concrete object types, 
+    only that they implement the weight interface.
+  </p>
+  <br>
+  
+  <h4>Recursive Weight Calculation & Event-Driven Updates</h4>
+  <p>
+    The system uses recursive traversal to calculate total weight at any platform node, automatically summing the platform's base weight, 
+    objects directly on it, and the total weight of its left and right children. Rather than polling every frame, I implemented an event-driven system 
+    using Unreal's overlap events. In other words, when objects enter or leave a platform, the weight recalculates locally and propagates upward through the parent hierarchy. 
+    This approach is significantly more efficient, only updating when state actually changes.
+  </p>
+  <br>
+  
+  <h4>Physics-Based Balancing</h4>
+  <p>
+    The visual balancing effect is driven by the weight differential between left and right platforms. 
+    The heavier side's offset is negative (moves down) while the lighter side's offset is positive (moves up), creating the seesaw effect. 
+    I use smooth interpolation (VInterpTo) with clamped offsets (±1000 units from initial position) to prevent extreme movements while maintaining physically grounded motion.
+  </p>
+  <br>
+  
+  <h3>Key Technical Challenges</h3>
+  <ul class="indented-list">
+    <li><strong>TScriptInterface Management:</strong> Unreal's C++ interface system requires careful initialization of both object and interface pointers. 
+    I created consistent wrapper patterns to ensure correct interface reference handling throughout the codebase.</li>
+    
+    <li><strong>Relative vs. Absolute Positioning:</strong> Initially, platform movement limits were calculated as absolute Z positions based on parent location. 
+    When parent platforms moved due to balancing, child limits became incorrect. I redesigned limits as relative offsets from initial positions, 
+    making them independent of parent movement and world position.</li>
+    
+    <li><strong>Weight Propagation:</strong> When objects are placed on deep child platforms, all ancestor platforms need updates. 
+    Each platform maintains a parent reference, allowing UpdateWeight() calls to recursively propagate up the tree with minimal overhead - 
+    only the path from leaf to root updates, not the entire tree.</li>
+  </ul>
+  <br>
+  
+  <h3>Results</h3>
+  <p>
+    The hierarchical balance platform system successfully demonstrated dynamic, physics-based puzzle solving in the beta presentation. 
+    The event-driven architecture proved efficient with multiple platforms updating simultaneously, and the recursive weight calculation correctly handled 
+    complex scenarios where boxes moved between platforms. The interface-based design provided the flexibility for designers to quickly construct and test 
+    different puzzle configurations.
+  </p>
+  <br>
+</section>
+ <div class="video-container">
       <iframe 
         width="560" 
         height="315" 
@@ -73,17 +134,98 @@
         frameborder="0" 
         allowfullscreen>
       </iframe>
-    </div>
-    <br>
-      <p>
-       I am currently collaborating with team members responsible for implementing player interactions—such as picking up and throwing boxes—and for programming 
-       the chain platform movement. I will continue developing the remaining puzzle mechanics, including the box key and target interactions, and addressing edge 
-       cases in the current system
-      </p>
+      </div>
 
-      
-    </section>
+<section class="section">
+  <br>
+  <p>
+    After beta review, we simplified the puzzle for level 0 to be more beginner-friendly, reserving multi-layer platforms for later levels. 
+    To save significant development time on player throw animations and physics interactions, I proposed implementing a mechanical crane system for object manipulation. 
+    This maintained the core puzzle mechanics while simplifying initial player experience and reducing animation workload.
+  </p>
+  <br>
+</section>
     <br>
+      <h3>Crane Mechanics Implementation</h3>
+      
+      <p>
+        After some review for the final plan for release, we decided to make the puzzle much simpler for level 0 of our release build to make the game more friendly for beginners 
+        and put the double layer balanced platforms for future levels. Additionally, to save time on player animations, I came up with the idea to pick up and drop boxes with a mechanical 
+        crane controlled by the player.
+      </p>
+      <br>
+      
+      <h4>Technical Architecture</h4>
+      <p>
+        I engineered a custom crane control system in C++ using Unreal Engine 5's Pawn architecture, allowing seamless transition between character navigation and crane operation. 
+        The system required careful consideration of several interconnected technical challenges: collision detection, input handling, camera management, and physics-based object interaction.
+      </p>
+      <br>
+
+      <h4>Custom Pawn Architecture</h4>
+      <p>
+        Rather than using Unreal's Character class, I built a custom Pawn from scratch to support the crane's unique movement constraints. 
+        The crane consists of a base that moves horizontally across a 2D plane and a magnet that moves independently along the vertical axis. 
+        I implemented a component-based hierarchy where collision detection is separated from visual representation - the crane base uses a box collision component as its root for physics, 
+        while visual meshes are attached as children with collision disabled for clean separation of concerns.
+      </p>
+      <br>
+      
+      <h4>Collision-Aware Movement System</h4>
+      <p>
+        One of the most challenging aspects was implementing robust collision detection that accounts for the entire crane system. 
+        I developed a sweep-based collision system using Unreal's shape trace queries that checks potential collisions before movement occurs:
+      </p>
+      <ul class="indented-list">
+        <li><strong>Horizontal Movement:</strong> Before the crane moves, the system performs a box sweep in the movement direction for both the magnet and any held object, 
+        checking against static world geometry. If either would collide with a wall or obstacle, the crane is prevented from moving in that direction.</li>
+        <li><strong>Vertical Movement:</strong> When lowering or raising the magnet, the system checks for collisions with floors and ceilings, 
+        stopping movement when obstacles are detected.</li>
+        <li><strong>Mobility Filtering:</strong> The collision system distinguishes between static obstacles (walls, floors) and movable objects (boxes), 
+        allowing the crane to push boxes but stopping at immovable barriers.</li>
+      </ul>
+      <br>
+      
+      <h4>Magnetic Pickup System</h4>
+      <p>
+        I implemented a smooth magnetic attraction effect for object pickup rather than instant snapping. When the magnet activates near a tagged object:
+      </p>
+      <ol class="indented-list">
+        <li>The system detects overlapping objects using a trigger collision component</li>
+        <li>Physics simulation is disabled on the target object</li>
+        <li>The object smoothly interpolates toward an attach point below the magnet</li>
+        <li>Once within a snap distance threshold, the object attaches to the magnet using Unreal's attachment system</li>
+        <li>When deactivated, physics re-enables and the object drops naturally</li>
+      </ol>
+      <p>
+        A key technical challenge was handling the case where the magnet is already hovering over an object when activated. 
+        I solved this by manually checking for already-overlapping objects during activation, ensuring the pickup works reliably regardless of trigger timing.
+      </p>
+      <br>
+      
+      <h4>Dual Camera System</h4>
+      <p>
+        To support both navigation and precision placement, I implemented a toggleable camera system with two perspectives:
+      </p>
+      <ul class="indented-list">
+        <li><strong>Angled View:</strong> A 60-degree angled camera for general crane operation and spatial awareness</li>
+        <li><strong>Top-Down View:</strong> A 90-degree overhead camera for precise box placement on the scale platforms</li>
+      </ul>
+      <p>
+        The transition between views uses smooth interpolation (FMath::RInterpTo) to avoid jarring camera cuts, maintaining player orientation throughout the switch.
+      </p>
+      <br>
+
+    <div class="video-container">
+      <iframe 
+        width="560" 
+        height="315" 
+        src="https://www.youtube.com/embed/KulFUHUG93o" 
+        title="Puzzle Demo" 
+        frameborder="0" 
+        allowfullscreen>
+      </iframe>
+    </div>
 
   </main>
 
