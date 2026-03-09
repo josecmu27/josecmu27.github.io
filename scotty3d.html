@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Your Portfolio</title>
+  <title>Scotty3D | Jose Lima</title>
   <link rel="stylesheet" href="./assets/css/style.css">
   
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@700&display=swap" rel="stylesheet">
@@ -29,13 +29,38 @@
     <h1>Scotty 3D</h1>
   </header>
 
+  <!-- Bar 1 -->
+  <div class="project-meta-bar">
+    <div class="project-meta-item">
+      <span class="project-meta-label">Role</span>
+      <span class="project-meta-value">3D Graphics Engineer</span>
+    </div>
+    <span class="project-meta-divider">|</span>
+    <div class="project-meta-item">
+      <span class="project-meta-label">Timeline</span>
+      <span class="project-meta-value">Aug 2025 – Dec 2025</span>
+    </div>
+    <span class="project-meta-divider">|</span>
+    <div class="project-meta-item">
+      <span class="project-meta-label">Course</span>
+      <span class="project-meta-value">CMU 15-362: Computer Graphics</span>
+    </div>
+  </div>
+
+  <!-- Bar 2 -->
+  <div class="project-meta-bar">
+    <div class="project-meta-item">
+      <span class="project-meta-label">Tools</span>
+      <span class="project-meta-value"> C++, Visual Studio Code, Git</span>
+    </div>
+  </div>
+
   <!-- Main Content -->
   <main class="main-content">
     <section class="section">
       <p>
       For my Computer Graphics course at Carnegie Mellon University, I worked on assignments in Scotty 3D, 
-      a C++ graphics engine developed for teaching rendering and geometry concepts. So far we have covered spanned foundational 
-      rendering techniques and interactive mesh editing.
+      a C++ graphics engine developed for teaching rendering, mesh operations, pathtracing, and animation systems.
     </p>
     <br>
     <h3>Assignment 1: Rendering Foundations</h3>
@@ -129,7 +154,7 @@
   <br>
   <p>
     A critical implementation detail was computing all new vertex positions before modifying any connectivity. I stored these in temporary data 
-    structures (`vertex_new_pos` and `edge_new_pos`) to prevent averaging already-averaged values, which would produce incorrect results. The implementation successfully produces 
+    structures for new vertex and edge positions to prevent averaging already-averaged values, which would produce incorrect results. The implementation successfully produces 
     smooth approximations of the original mesh geometry. Each iteration quadruples the triangle count while progressively smoothing sharp features, converging toward a limit surface
     that faithfully represents the coarse input with enhanced detail and smoothness.
   </p>
@@ -176,7 +201,7 @@
   <br>
   <h4> BVH Acceleration Structure </h4>
   <p>
-    To make path tracing practical for complex scenes, I implemented a Bounding Volume Hierarchy (BVH) that dramatically accelerates ray-scene intersection tests. Without a BVH, every ray must test intersection against every primitive in the scene—an O(n) operation that becomes prohibitively expensive for detailed models.
+    To make path tracing practical for complex scenes, I implemented a Bounding Volume Hierarchy (BVH) that dramatically accelerates ray-scene intersection tests. Without a BVH, every ray must test intersection against every primitive in the scene which becomes expensive for detailed models.
     The BVH organizes scene primitives into a tree structure where each node stores a bounding box that encloses all primitives in its subtree. I implemented the structure as an implicit tree stored in a vector, similar to heap data structures. Construction uses the Surface Area Heuristic to determine optimal split positions, balancing the tree for efficient traversal.
     Key implementation details included proper bounding box intersection tests and carefully reordering primitives during construction so that each node's start and size fields correctly index into the primitive array. The BVH reduces intersection tests from O(n) to O(log n) on average, making complex scenes renderable in reasonable time
   </p>
