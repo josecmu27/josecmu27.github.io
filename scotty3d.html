@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Scotty 3D | Jose Lima</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+  <link rel="stylesheet" href="assets/css/project_page.css"/>
+   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+</head>
+ 
+ 
+<body>
+ 
+  <div id="navbar-placeholder"></div>
+ 
+  <!-- Hero -->
+  <div class="ascent-hero">
+    <img src="assets/images/Scotty3D/scotty3d_hero.png" alt="Scotty 3D render showcase" />
+    <div class="ascent-hero-overlay">
+      <h1>Scotty 3D</h1>
+      <p class="hero-sub">C++ graphics engine coursework, CMU Computer Graphics</p>
+      <div class="ascent-hero-buttons">
+        <a href="#systems" class="btn btn-primary">View Gallery</a>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- Main content -->
+  <div class="ascent-content">
+ 
+    <a href="portfolio.html" class="back-link">All Projects</a>
+ 
+    <!-- Meta bar -->
+    <div class="meta-bar">
+      <div class="meta-item">
+        <span class="meta-label">Course</span>
+        <span class="meta-value">CMU 15-362: Computer Graphics</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Language</span>
+        <span class="meta-value">C++</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Role</span>
+        <span class="meta-value">Graphics Programmer</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Timeline</span>
+        <span class="meta-value">Aug 2025 &ndash; Dec 2025</span>
+      </div>
+    </div>
+ 
+    <!-- Overview -->
+    <h2>Overview</h2>
+    <p>
+      For my Computer Graphics course at Carnegie Mellon, I worked inside Scotty 3D, a C++ graphics engine
+      built for teaching rendering, mesh editing, ray and path tracing, and animation. The engine provides
+      the surrounding scaffolding, and students implement the core systems underneath it across a semester of
+      assignments.
+    </p>
+ 
+    <hr class="hud-divider" />
+ 
+    <!-- Systems -->
+    <h2 id="systems">Topics Covered</h2>
+ 
+    <div class="system-grid">
+ 
+      <!-- Rendering Foundations -->
+      <div class="system-card">
+        <div class="system-card-header">
+          <h3>Rasterization Pipeline</h3>
+        </div>
+        <p>
+          A software rasterizer built around the same stages a GPU uses: transforming vertices through a
+          scene graph, building and clipping triangles, dividing to screen space, and shading the resulting
+          fragments. Covers perspective correct interpolation, depth testing, blending, and supersampling for
+          antialiasing.
+        </p>
+        <figure style="margin: 1rem 0; text-align:center;">
+          <img src="assets/images/Scotty3D/rasterizer.png" alt="Rasterizer render submission" style="max-width:100%; border-radius:8px;">
+          <figcaption style="color:#aaa; font-size:0.9rem; margin-top:0.5rem;">Rasterizer render submission</figcaption>
+        </figure>
+      </div>
+ 
+      <!-- Mesh Editing -->
+      <div class="system-card">
+        <div class="system-card-header">
+          <h3>Halfedge Mesh Editing</h3>
+        </div>
+        <p>
+          Local and global mesh operations built on a halfedge connectivity structure, including edge flips,
+          splits, collapses, triangulation, and Loop subdivision for smoothly increasing mesh detail while
+          converging toward a limit surface.
+        </p>
+        <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap; margin:1rem 0;">
+          <figure style="flex:0 0 45%; text-align:center;">
+            <img src="assets/images/Scotty3D/BeforeFlip.png" alt="Before edge flip" style="width:100%; height:220px; object-fit:cover; border-radius:8px;">
+            <figcaption style="color:#aaa; font-size:0.85rem; margin-top:0.4rem;">Before edge flip</figcaption>
+          </figure>
+          <figure style="flex:0 0 45%; text-align:center;">
+            <img src="assets/images/Scotty3D/AfterFlip.png" alt="After edge flip" style="width:100%; height:220px; object-fit:cover; border-radius:8px;">
+            <figcaption style="color:#aaa; font-size:0.85rem; margin-top:0.4rem;">After edge flip</figcaption>
+          </figure>
+        </div>
+     
+      </div>
+ 
+      <!-- Path Tracing -->
+      <div class="system-card">
+        <div class="system-card-header">
+          <h3>Ray and Path Tracing</h3>
+        </div>
+        <p>
+          A ray tracer extended into a full path tracer for global illumination, covering camera ray
+          generation, triangle and sphere intersection, a Bounding Volume Hierarchy for accelerating scene
+          traversal, Lambertian and specular materials including mirrors and glass, light sampling for
+          reduced noise, and infinite environment lighting.
+        </p>
+        <figure style="margin: 1rem 0; text-align:center;">
+          <img src="assets/images/Scotty3D/pathtracer_showcase.png" alt="Path tracer showcase" style="max-width:100%; border-radius:8px;">
+          <figcaption style="color:#aaa; font-size:0.9rem; margin-top:0.5rem;">Path traced render</figcaption>
+        </figure>
+        <figure style="margin: 1rem 0; text-align:center;">
+          <img src="assets/images/Scotty3D/bvh_showcase.png" alt="BVH showcase" style="max-width:100%; border-radius:8px;">
+          <figcaption style="color:#aaa; font-size:0.9rem; margin-top:0.5rem;">BVH acceleration structure visualization</figcaption>
+        </figure>
+      </div>
+ 
+      <!-- Animation -->
+      <div class="system-card">
+        <div class="system-card-header">
+          <h3>Skeletal Animation</h3>
+        </div>
+        <p>
+          A full animation pipeline covering Catmull-Rom spline interpolation for keyframed motion, forward
+          and inverse kinematics for posing a skeleton, linear blend skinning to deform a mesh based on the
+          skeleton beneath it.
+        </p>
+        <div class="video-embed">
+          <iframe
+            src="https://www.youtube.com/embed/v03U2UqRTOE"
+            title="Scotty 3D animation final submission"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+ 
+    </div>
+ 
+  </div>
+ 
+  <div id="footer-placeholder"></div>
+  <script src="assets/js/components.js"></script>
+ 
+</body>
+</html>

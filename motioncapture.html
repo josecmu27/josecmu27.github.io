@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VR Motion Capture Pipeline | Jose Lima</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+  <link rel="stylesheet" href="assets/css/project_page.css"/>
+   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+</head>
+ 
+ 
+<body>
+ 
+  <div id="navbar-placeholder"></div>
+ 
+  <!-- Hero -->
+  <div class="ascent-hero">
+    <img src="assets/images/APL/motioncapture_hero.jpg" alt="XR Motion Capture Pipeline screenshot" />
+    <div class="ascent-hero-overlay">
+      <h1>VR Motion Capture Pipeline</h1>
+      <p class="hero-sub">OptiTrack integration, calibration, and record and replay tooling for XR research, Augmented Perception Lab</p>
+      <div class="ascent-hero-buttons">
+        <a href="#systems" class="btn btn-primary">View Systems</a>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- Main content -->
+  <div class="ascent-content">
+ 
+    <a href="portfolio.html" class="back-link">All Projects</a>
+ 
+    <!-- Meta bar -->
+    <div class="meta-bar">
+      <div class="meta-item">
+        <span class="meta-label">Engine</span>
+        <span class="meta-value">Unity</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Language</span>
+        <span class="meta-value">C#</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Role</span>
+        <span class="meta-value">XR Software Engineer</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Timeline</span>
+        <span class="meta-value">May 2025 &ndash; Dec 2025</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Lab</span>
+            <span class="project-meta-value"><a href="https://augmented-perception.org/" target="_blank" rel="noopener noreferrer">Augmented Perception Lab</a></span>
+      </div>
+    </div>
+ 
+    <!-- Overview -->
+    <h2>Overview</h2>
+    <p>
+      Over the summer, I built a motion capture pipeline at the Augmented Perception Lab at CMU to support XR interaction research.
+      I integrated an OptiTrack motion catpure system into Unity, solved the coordinate alignment problem
+      between the two, and built a record and replay framework so researchers could capture and reproduce
+      motion capture sessions for analysis.
+    </p>
+    <p>
+      In the fall, I used that same pipeline as the foundation for an applied prototype: a VR fitness trainer
+      that plays back a pre-recorded trainer avatar, tracks a user's body in real time, and compares the two so
+      the user can see how closely their form matches the trainer's. We presented the prototype to a footwear
+      company interested in its applications for sports training and interactive fitness.
+    </p>
+ 
+    <hr class="hud-divider" />
+ 
+    <!-- Systems -->
+    <h2 id="systems">Systems</h2>
+ 
+    <div class="system-grid">
+ 
+      <!-- OptiTrack Calibration -->
+      <div class="system-card">
+        <div class="system-card-header">
+          <h3>Motion Capture Calibration</h3>
+        </div>
+        <p>
+          Integrating OptiTrack into Unity meant reconciling two systems that do not share a coordinate space.
+          I set up the OptiTrack plugin and Motive software with a mocap suit, then implemented a three point
+          calibration method using 4x4 transformation matrices to align OptiTrack's tracked space with Unity's
+          world space. This let motion data collected on the mocap system map correctly onto the XR environment
+          the user was actually standing in.
+        </p>
+        <div class="video-embed">
+          <iframe
+            src="https://www.youtube.com/embed/TIzqZqqDJVU"
+            title="Three point calibration demo"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+ 
+      <!-- Record and Replay -->
+      <div class="system-card">
+        <div class="system-card-header">
+          <h3>Record and Replay Framework</h3>
+        </div>
+        <p>
+          Once calibration was working, I built a system to log transformation data from OptiTrack skeletons,
+          Meta Quest VR hands, and interactive objects like a test keypad, all into CSV files. To reconstruct a
+          session for playback, I parsed those CSVs back into Unity using regular expressions, so a researcher
+          could record a session once and replay it exactly for analysis. This same framework is what later let
+          me capture the trainer avatar's performance for the fitness trainer prototype.
+        </p>
+
+        <div class="video-embed">
+          <iframe
+            src="https://www.youtube.com/embed/Z9LL5yLuEeo"
+            title="Three point calibration demo"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+        
+      </div>
+ 
+      <!-- Motion Comparison -->
+      <div class="system-card">
+        <div class="system-card-header">
+          <h3>VR Fitness Trainer</h3>
+        </div>
+        <p>
+          During the fall semester, I built a prototype on top of the motion capture pipeline: a fitness
+          trainer that plays back a pre-recorded trainer avatar captured through the record and replay
+          framework, while tracking the live user through a MediaPipe 3D pose tracking plugin instead of the
+          mocap suit since the goal here was something a user could actually use without lab equipment. Each
+          frame, the system reads the trainer avatar's joint rotations, estimates equivalent rotation values
+          from the user's MediaPipe joint positions, and computes the difference between the two, which gets
+          plotted in real time so the user can see how closely their motion tracks the trainer's. Users can
+          also rotate the trainer avatar freely and choose which joints they want to focus on.
+        </p>
+        <p class="tech-note">
+          <b>Implementation Note:</b> MediaPipe outputs joint positions, not rotations, while the trainer
+          avatar's motion is defined by joint rotations. Comparing the two meaningfully required converting
+          estimated MediaPipe joint positions into rotation values first, rather than comparing positions and
+          rotations directly.
+        </p>
+        <figure style="margin: 1rem 0; text-align:center;">
+          <img src="assets/images/APL/ExerciseTrainerProject.png" alt="Fitness trainer prototype showcase" style="max-width:100%; border-radius:8px;">
+          <figcaption style="color:#aaa; font-size:0.9rem; margin-top:0.5rem;">Prototype exercise application built on the pipeline</figcaption>
+        </figure>
+        
+      </div>
+ 
+    </div>
+ 
+    <hr class="hud-divider" />
+
+ 
+  </div>
+ 
+  <div id="footer-placeholder"></div>
+  <script src="assets/js/components.js"></script>
+ 
+</body>
+</html>

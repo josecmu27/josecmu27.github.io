@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FlyerFighters | Jose Lima</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+  <link rel="stylesheet" href="assets/css/project_page.css"/>
+   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+</head>
+ 
+ 
+<body>
+ 
+  <div id="navbar-placeholder"></div>
+ 
+  <!-- Hero -->
+  <div class="ascent-hero">
+    <img src="assets/images/FlyerFighter/flyerfighter_hero.png" alt="FlyerFighters screenshot" />
+    <div class="ascent-hero-overlay">
+      <h1>FlyerFighter</h1>
+      <p class="hero-sub">A VR firefighter traversal game</p>
+      <div class="ascent-hero-buttons">
+        <a href="#systems" class="btn btn-primary">View Systems</a>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- Main content -->
+  <div class="ascent-content">
+ 
+    <a href="portfolio.html" class="back-link">All Projects</a>
+ 
+    <!-- Meta bar -->
+    <div class="meta-bar">
+      <div class="meta-item">
+        <span class="meta-label">Engine</span>
+        <span class="meta-value">Unity</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Language</span>
+        <span class="meta-value">C#</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Role</span>
+        <span class="meta-value">VR Gameplay Engineer</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Team</span>
+        <span class="meta-value">5 people</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Timeline</span>
+        <span class="meta-value">Mar 2025 &ndash; May 2025</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Course</span>
+        <span class="meta-value">Advanced Game Studio</span>
+      </div>
+    </div>
+ 
+    <!-- Overview -->
+    <h2>Overview</h2>
+    <p>
+      FlyerFighters was a semester long project for Advanced Game Studio at Carnegie Mellon, built with a
+      cross disciplinary team of five programmers, artists, and a product manager. The game is a firefighter
+      themed VR experience set in a futuristic city, where players fly around and rescue civilians using a
+      traversal mechanic built around fire extinguishers. That mechanic came out of early prototyping, where
+      flying by extinguisher blast turned out to be the most fun of several traversal ideas we tried, and it
+      became the foundation the rest of the game was built around.
+    </p>
+    <p>
+      My contributions covered programming, UI, and level design. This project gave me experience
+      inside a real cross disciplinary team looks like, coordinating systems work with artists and a product manager rather than building solo.
+    </p>
+ 
+    <div class="video-embed" style="margin: 1.5rem 0;">
+      <iframe
+        src="https://www.youtube.com/embed/kmXjipNrt8M"
+        title="FlyerFighters final submission"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+ 
+    <hr class="hud-divider" />
+ 
+    <!-- Systems -->
+    <h2 id="systems">Systems</h2>
+ 
+    <div class="system-grid">
+ 
+      <!-- Game Manager -->
+      <div class="system-card">
+        <div class="system-card-header">
+          <h3>Game Manager and Save System</h3>
+        </div>
+        <p>
+          I built the Game Manager that handled core systems across the whole game: game state, player
+          statistics, and save data. This is what let players leave a level mid session and pick back up where
+          they left off as they explored the city and rescued civilians, rather than losing progress between
+          play sessions.
+        </p>
+      </div>
+ 
+      <!-- Slicing Mechanic -->
+      <div class="system-card">
+        <div class="system-card-header">
+          <h3>Object Cutting Mechanic</h3>
+        </div>
+        <p>
+          Players can cut through obstacles like wood beams using VR motion controls. Each cuttable object
+          starts as a solid piece with its pre-cut fragments hidden underneath, gravity disabled and physics
+          set to kinematic so they hold in place. A set of cut zone triggers sits along the cut line, and each
+          one the player's weapon passes through gets cleared from a counter on the object.
+        </p>
+        <p>
+          Once every cut zone has been triggered, the object switches its fragments to a walkable physics
+          layer, enables gravity and physics simulation so they fall naturally, and removes the trigger zones
+          immediately so they cannot be hit again. The fragments clean themselves up a few seconds later so
+          they do not accumulate in the scene.
+        </p>
+        <p class="tech-note">
+          <b>Implementation Note:</b> This is not real time geometry cutting, it is a reveal built on
+          pre-authored fragments and a trigger counter. That kept it fast enough to run smoothly in VR and
+          simple enough to build in the time we had, at the cost of only supporting cuts along a predefined
+          line rather than an arbitrary one.
+        </p>
+        
+      </div>
+
+ 
+    </div>
+ 
+  </div>
+ 
+  <div id="footer-placeholder"></div>
+  <script src="assets/js/components.js"></script>
+ 
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Project Rebirth | Jose Lima</title>
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/components.css" />
+  <link rel="stylesheet" href="assets/css/project_page.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<div id="navbar-placeholder"></div>
+
+ <div class="ascent-hero">
+    <img src="assets/images/ProjectRebirth/rebirth_hero.png" alt="PROJECT Rebirth screenshot" />
+    <div class="ascent-hero-overlay">
+ 
+      <h1>Project Rebirth</h1>
+      <p class="hero-sub">A post-apocalyptic action-narrative game </p>
+      <div class="ascent-hero-buttons">
+        <a href="YOUR_GITHUB_LINK" target="_blank" rel="noopener" class="btn btn-primary">GitHub Repo</a>
+        <a href="#systems" class="btn btn-outline">View Systems</a>
+        <!-- Add or remove buttons as needed -->
+        <!-- <a href="YOUR_VIDEO_LINK" target="_blank" rel="noopener" class="btn btn-outline">Watch Demo</a> -->
+      </div>
+    </div>
+  </div>
+ 
+  <!-- ── Main content ───────────────────────────────────────────────────── -->
+  <div class="ascent-content">
+ 
+    <a href="portfolio.html" class="back-link">All Projects</a>
+ 
+    <!-- ── Meta bar ── -->
+    <!-- Update all values. Remove rows that don't apply. -->
+    <div class="meta-bar">
+      <div class="meta-item">
+        <span class="meta-label">Engine</span>
+        <span class="meta-value">Unreal Engine 5</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Language</span>
+        <span class="meta-value">C++</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Role</span>
+        <span class="meta-value">Gameplay Programmer & Game Designer</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Team</span>
+        <span class="meta-value">12 people</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Timeline</span>
+        <span class="meta-value">Oct 2025 &ndash; Dec 2025</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Organization</span>
+        <span class="meta-value">CMU Game Creation Society</span>
+      </div>
+    </div>
+ 
+    <!-- ── Overview ── -->
+    <h2>Overview</h2>
+    <p>
+       Project Rebirth is a post apocalyptic action narrative game built by a 12 person team at the
+      CMU Game Creation Society, running on the Unreal Engine.
+    </p>
+
+    <p>
+       I joined as a gameplay programmer and a game designer. I was assigned to design and build the puzzles.
+      I proposed a balancing puzzle where the player picks up and throws boxes onto scale platforms, shifting
+      the balance to raise themselves up and reach new areas. This was also my first project in Unreal Engine 5,
+      so a good part of the semester went into learning the engine's actor and component model and its C++
+      interface system alongside actually building the puzzle.
+    </p>
+ 
+    <hr class="hud-divider" />
+ 
+    <!-- ── Systems / Features ── -->
+    <!-- Rename this section if "Systems" doesn't fit the project -->
+    <!-- e.g. "Features", "Implementations", "Contributions" -->
+    <h2 id="systems">Systems</h2>
+ 
+    <div class="system-grid">
+ 
+      <!-- System card 1 -->
+      <div class="system-card">
+        <div class="system-card-header">
+          <h3>Recursive Weight System</h3>
+        </div>
+         <p>
+          The puzzle is built around scale platforms arranged like a binary tree, where each platform can hold
+          up to two sub platforms, a left and a right. Any object that can report a weight, whether that is a
+          player, a box, or another platform, implements a shared <code>IWeightProvider</code> interface. This
+          keeps the platforms decoupled from the objects sitting on them: a platform never checks what type of
+          actor it is dealing with, it just asks for a weight.
+        </p>
+
+        <p>
+          Weight is calculated recursively rather than every frame. Unreal's overlap events trigger a
+          recalculation only when an object enters or leaves a platform, and that new total propagates upward
+          through the parent chain so only the path from the changed platform to the root updates, not the
+          whole tree. The visual balancing itself comes from the weight difference between a platform's two
+          children: the heavier side eases downward and the lighter side moves upward using clamped,
+          interpolated movement so the motion stays smooth and physically grounded.
+        </p>
+
+        <p class="tech-note">
+          <b>Implementation Note:</b> Platform movement limits were originally calculated as absolute Z
+          positions. Once a parent platform started moving from balancing, its children's limits became
+          wrong, since they were still anchored to a position that had shifted. I redesigned the limits as
+          relative offsets from each platform's initial position instead, which made them independent of
+          however much the parent had moved.
+        </p>
+
+        <!-- Optional video embed -- delete if not needed -->
+        <div class="video-embed">
+          <iframe
+            src="https://www.youtube.com/embed/x7ugxBqfXpI"
+            title="Feature demo"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+ 
+      <!-- System card 2 -->
+      <div class="system-card">
+        <div class="system-card-header">
+          
+          <h3>Crane Control and Magnetic Pickup</h3>
+        </div>
+         <p>
+          After the beta review, we simplified the planned showcase level to a single layer of platforms and 
+          pushed the deeper binary tree puzzles to potential later levels. To avoid spending the rest of the semester
+          on player throw animations and physics interactions, I proposed replacing the throw mechanic with a crane the
+          player could control directly to pick up and place boxes. This kept the core puzzle idea intact while
+          cutting most of the animation work.
+        </p>
+
+         <p>
+          The crane is a custom Pawn rather than a Character, since it needed movement constraints a standard
+          character controller does not support: the base moves horizontally on a plane while the magnet moves
+          independently along the vertical axis. Before any movement happens, the system sweeps ahead of the
+          crane base and any held object to check against world geometry, so the crane simply will not move
+          into a spot that would clip something it is carrying. Picking an object up is a smooth pull toward
+          an attach point rather than an instant snap, with physics disabled during the pull and re-enabled
+          the moment the object is released.
+        </p>
+
+        <!-- Optional video embed -- delete if not needed -->
+        <div class="video-embed">
+          <iframe
+            src="https://www.youtube.com/embed/bjojPQqM3ZU"
+            title="Feature demo"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+ 
+    </div>
+ 
+    <hr class="hud-divider" />
+
+    <h2>Results</h2>
+
+    <p>
+      Here is a video showing both systems working together. This was the version showcased during the CMU Game Creation
+      Society's Release Day Event. 
+    </p>
+
+    <!-- Optional video embed -- delete if not needed -->
+        <div class="video-embed">
+          <iframe
+            src="https://www.youtube.com/embed/cIuar_IApSE"
+            title="Feature demo"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+ 
+   
+ 
+    <hr class="hud-divider" />
+ 
+
+    <!-- ── Source ── -->
+    <!-- Update or delete the paragraph text as needed -->
+    <!-- Remove the GitHub button if the repo is private -->
+    <h2>Source</h2>
+    <p>
+      This repository contains the specific files I contributed to Project Rebirth, the balance puzzle system
+      and the crane controller.
+    </p>
+    
+    <a href="https://github.com/josecmu27/Project-Rebirth" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 0.5rem;">
+      View GitHub Repository
+    </a>
+ 
+  </div>
+
+<!-- Sticky Footer -->
+<div id="footer-placeholder"></div>
+<script src="assets/js/components.js"></script>
+
+</body>
+</html>

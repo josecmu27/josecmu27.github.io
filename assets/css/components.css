@@ -1,0 +1,218 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   components.css  —  add to every page alongside your existing styles.css
+   <link rel="stylesheet" href="components.css">
+   ───────────────────────────────────────────────────────────────────────────── */
+ 
+ 
+/* 1. Navbar — color refresh + constrained inner width */
+ 
+.navbar {
+  background-color: #111318;
+  overflow: visible;
+}
+ 
+.navbar:not(:has(.mobile-menu.open)) {
+  border-bottom: 1px solid rgba(77, 166, 255, 0.15);
+}
+ 
+.navbar-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+}
+ 
+/* 2. Subheading */
+ 
+.nav-left .subheading {
+  font-size: 0.75rem;
+  color: #4da6ff;
+  letter-spacing: 0.1em;
+  margin-top: 3px;
+}
+ 
+/* 3. Desktop nav */
+ 
+.desktop-nav {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+ 
+.desktop-nav a {
+  position: relative;
+  padding-bottom: 4px;
+  color: #ccc;
+  text-decoration: none;
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 1px;
+  font-size: 0.9rem;
+  transition: color 0.2s;
+}
+ 
+.desktop-nav a:hover {
+  color: #fff;
+}
+ 
+.desktop-nav a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 1px;
+  background: #4da6ff;
+  box-shadow: 0 0 6px rgba(77, 166, 255, 0.7);
+  transition: width 0.25s ease;
+}
+ 
+.desktop-nav a:hover::after {
+  width: 100%;
+}
+ 
+/* 4. Body background */
+ 
+body {
+  background-color: #141519;
+}
+ 
+/* 5. Footer */
+ 
+footer {
+  background: #111318;
+  border-top: 1px solid rgba(77, 166, 255, 0.15);
+  padding: 0.6rem 0;
+}
+ 
+.footer-icons img:hover {
+  filter: drop-shadow(0 0 5px rgba(77, 166, 255, 0.8));
+  transform: scale(1.1);
+}
+ 
+/* 6. Project card hover */
+ 
+.project-card,
+.featured-card {
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+ 
+.project-card:hover,
+.featured-card:hover {
+  box-shadow: 0 0 0 1px rgba(77, 166, 255, 0.25),
+              0 6px 24px rgba(0, 0, 0, 0.5);
+  transform: translateY(-2px);
+}
+ 
+/* 8. HUD divider */
+ 
+.hud-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(77, 166, 255, 0.4) 30%,
+    rgba(77, 166, 255, 0.4) 70%,
+    transparent
+  );
+  border: none;
+  margin: 2.5rem 0;
+}
+ 
+/* 9. Hamburger */
+ 
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 24px;
+  height: 17px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+ 
+.ham-bar {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: #ccc;
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+ 
+.hamburger.open .ham-bar:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+.hamburger.open .ham-bar:nth-child(2) { opacity: 0; }
+.hamburger.open .ham-bar:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+ 
+/* 10. Mobile menu */
+ 
+.mobile-menu {
+  background: #111318;
+  
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+ 
+.mobile-menu.open {
+  max-height: 400px;
+  overflow: visible;
+}
+ 
+.mobile-menu ul {
+  list-style: none;
+  padding: 0.5rem 0 1rem;
+  margin: 0;
+}
+ 
+.mobile-menu ul li a {
+  display: block;
+  padding: 0.7rem 1.5rem;
+  color: #ccc;
+  text-decoration: none;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  border-left: 2px solid transparent;
+  transition: border-color 0.2s, color 0.2s;
+}
+ 
+.mobile-menu ul li a:hover {
+  color: #4da6ff;
+  border-left-color: #4da6ff;
+}
+ 
+.mobile-menu-icons {
+  display: flex;
+  gap: 1.2rem;
+  
+}
+ 
+.mobile-menu-icons img {
+  width: 24px;
+  height: 24px;
+  opacity: 0.75;
+  transition: opacity 0.2s, filter 0.2s;
+}
+ 
+.mobile-menu-icons img:hover {
+  opacity: 1;
+  filter: drop-shadow(0 0 4px #4da6ff);
+}
+ 
+/* 11. Responsive */
+ 
+@media (max-width: 700px) {
+  .hamburger   { display: flex; }
+  .desktop-nav { display: none; }
+  .mobile-menu { display: block; }
+  .hero h1 { font-size: 1.6rem; }
+  .project-grid { grid-template-columns: 1fr; }
+  .project-meta-bar { flex-direction: column; gap: 0.5rem; }
+  .project-meta-divider { display: none; }
+}
+ 

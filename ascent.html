@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Project Ascent | Jose Lima</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/components.css" />
+  <link rel="stylesheet" href="assets/css/project_page.css"/>
+   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+</head>
+
+
+<body>
+
+  <div id="navbar-placeholder"></div>
+
+  <!-- Hero -->
+  <div class="ascent-hero">
+    <img src="assets/images/Ascent/ascent_hero.png" alt="Project Ascent — player and Cyborg Soldier in an industrial sci-fi environment" />
+    <div class="ascent-hero-overlay">
+      <span class="ascent-status">In Development</span>
+      <h1>Ascent</h1>
+      <p class="hero-sub">A third-person sci-fi shooter</p>
+      <div class="ascent-hero-buttons">
+        <a href="https://github.com/josecmu27" target="_blank" rel="noopener" class="btn btn-primary">GitHub Repo</a>
+        <a href="#systems" class="btn btn-outline">View Systems</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div class="ascent-content">
+
+    <a href="portfolio.html" class="back-link">All Projects</a>
+
+    <!-- Meta bar -->
+    <div class="meta-bar">
+      <div class="meta-item">
+        <span class="meta-label">Engine</span>
+        <span class="meta-value">Unreal Engine 5</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Language</span>
+        <span class="meta-value">C++</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Role</span>
+        <span class="meta-value">Solo Developer</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Timeline</span>
+        <span class="meta-value">May 2026 &ndash; Present</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Status</span>
+        <span class="meta-value">Active Development</span>
+      </div>
+    </div>
+
+    <!-- Overview -->
+    <h2>Overview</h2>
+    <p> 
+      Ascent is a single-player third-person shooter built in C++ on Unreal Engine 5. The player's goal is to reach
+      the top of the city's tallest building to reset the malfunctioning core system and regain control of the city's
+      systems. Each floor presents a new challenge to the player. They will use a grappling hook to traverse 
+      the environment and pull objects for cover or to pick up items while encountering Cyborg Soldier Squads that 
+      coordinate with each other and the building's systems to stop the player.   
+    </p>
+    <p>
+      The purpose of this project is to strengthen my C++ skills and object-oriented programming fundamentals to
+      build gameplay systems. Ascent's systems make use of polymorphism through inhertiance hierarchies 
+      and interfaces, and data-driven design via Unreal's Data Assets to ensure extensiblity as the project grows 
+      while staying practical given asset constraints of working as a solo developer. 
+    </p>
+
+    <hr class="hud-divider" />
+
+    <!-- Systems -->
+    <h2 id="systems">Systems</h2>
+
+    <div class="system-grid">
+
+      <!-- Enemy AI -->
+      <div class="system-card">
+        <div class="system-card-header">
+          <h3>Cyborg Soldier AI</h3>
+        </div>
+        <p>
+          The Cyborg Soldier uses a Behavior Tree with custom <code>BTTaskNode</code> tasks and <code>BTDecorator</code>
+          decorators for each state implemented in C++. The soldier patrols via EQS random wandering,
+          transitions to chase when the player enters its sight cone, and enters a nested
+          Parallel combat state where aiming, strafing, and firing.
+        </p>
+        <p>
+          Additionally, when one soldier loses sight of the player, it broadcasts the last known location
+          to all active soldiers in the level via a sphere overlap query, pushing them into
+          an Investigate state. 
+        </p>
+        <p class="tech-note">
+          <b>Implementation Note:</b> The perception system uses <code>UAISenseConfig_Sight</code>
+          with dynamic radius expansion on combat engagement, and <code>UAISenseConfig_Damage</code>
+          so soldiers react to being shot from outside their sight cone.
+          Additionally, the strafe task uses <code>NodeMemory</code> for per-enemy state since all 
+          soldiers share one task instance.
+        </p>
+        <!-- Replace src with your actual squad alert YouTube embed URL -->
+        <div class="video-embed">
+          <iframe
+            src="https://www.youtube.com/embed/HKwwiphosio"
+            title="Cyborg Soldier AI"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+
+      <!-- Grappling Hook -->
+      <div class="system-card">
+        <div class="system-card-header">
+          <h3>Grappling Hook</h3>
+        </div>
+        <p>
+        The grappling hook reads the environment and responds differently based on what it hits.
+        Heavy objects like walls and structures pull the player toward them in a straight line
+        with gravity disabled during travel. Lighter objects like crates get pulled toward the
+        player instead, giving them a way to grab cover mid-fight.
+        </p>
+
+        <p class="tech-note">
+        <b>Implementation Note:</b> The hook component never checks what type of actor it hit. Instead it calls a single
+        interface function via <code>Execute_GrapplePull()</code> and each class decides what
+        being grappled means for them. Adding a new grappable type only requires implementing
+        <code>IGrappable</code> with no changes to the hook component itself.
+        </p>
+        <!-- Replace with your grappling hook video embed URL -->
+        <div class="video-embed">
+          <iframe
+            src="https://www.youtube.com/embed/-7TGC9hPS4c"
+            title="Grappling Hook Traversal"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+
+      <!-- Weapon System -->
+      <div class="system-card">
+        <div class="system-card-header">
+          <h3>Data-Driven Weapon System</h3>
+        </div>
+        <p>
+        Each weapon is defined entirely by a <code>UWeaponDataAsset</code> instance. Recoil values,
+        spread angle, projectiles per shot, reload timing, mesh, sound effects, and animation
+        montages all live on the Data Asset. The current system supports hitscan weapons which are weapons
+        that resolve hits instantly via line trace, covering rifles, shotguns, and similar archetypes.
+        Adding a new hitscan weapon type requires only a new Data Asset instance with no C++ changes.
+        </p>
+
+        <p class="tech-note">
+        <b>Implementation Note:</b> Each weapon component broadcasts fire and reload events carrying the weapon type as a
+        parameter. A coordinating inventory component re-broadcasts these through its own stable
+        delegates so the character binds once and receives the correct event regardless of which
+        weapon is currently active or how many times weapons have been swapped at runtime.
+        </p>
+        
+      </div>
+
+    </div>
+
+    <hr class="hud-divider" />
+
+    <!-- Architecture Highlights -->
+    
+
+    <hr class="hud-divider" />
+
+    <!-- What's Next -->
+    <h2>What's Next</h2>
+
+    <ul class="next-list">
+      <li>
+        <strong>AI Director</strong>
+        Token-based combat director coordinating squad attacks, preventing simultaneous rushes,
+        and dynamically adjusting encounter intensity based on player health and ammo state.
+      </li>
+      <li>
+        <strong>Designed Level</strong>
+        A real combat encounter with cover placement, elevation changes, and enemy positioning
+        designed around the grappling hook traversal and squad AI.
+      </li>
+      <li>
+        <strong>Dinosaur Mech</strong>
+        Second enemy type inheriting from AEnemyBase with melee/charge behavior,
+        demonstrating the base class hierarchy supporting distinct AI archetypes.
+      </li>
+    </ul>
+
+    <hr class="hud-divider" />
+
+    <!-- GitHub -->
+    <h2>Source and Documentation</h2>
+    <p>
+      The development of this project follows a feature-branch workflow with pull request merged into the dev branch.
+      Each pull request includes: Summary, Changes, Implementation Notes, Testing, and Known Limitations/Issues.
+    </p>
+    <a href="https://github.com/josecmu27" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 0.5rem;">
+      View GitHub Repository
+    </a>
+
+  </div>
+
+  <div id="footer-placeholder"></div>
+  <script src="assets/js/components.js"></script>
+
+</body>
+</html>
