@@ -82,10 +82,10 @@
 
     <div class="system-grid">
 
-      <!-- Enemy AI -->
+      <!-- Enemy AI Systems -->
       <div class="system-card">
         <div class="system-card-header">
-          <h3>Cyborg Soldier AI</h3>
+          <h3>Enemy AI Systems</h3>
         </div>
         <p>
           The Cyborg Soldier uses a Behavior Tree with custom <code>BTTaskNode</code> tasks and <code>BTDecorator</code>
@@ -93,11 +93,22 @@
           transitions to chase when the player enters its sight cone, and enters a nested
           Parallel combat state where aiming, strafing, and firing.
         </p>
+
         <p>
-          Additionally, when one soldier loses sight of the player, it broadcasts the last known location
-          to all active soldiers in the level via a sphere overlap query, pushing them into
-          an Investigate state. 
+          Combat is coordinated through a custom Token Subsystem, which limits how many soldiers can
+          attack the player at the same time. Soldiers request a token when ready to attack, scored by
+          distance and wait time. If the budget is full, a better-positioned requester can steal a token
+          from a lower-scoring holder. This keeps encounters readable instead of every alerted enemy
+          firing at once.
         </p>
+
+        <p>
+          I have extended this via a Combat Role Subsystem that assigns soldiers Engager or
+          Defender roles. A Defender stays at a defense point and shoots the player from a distance, while an Engager
+          attacks the player by getting close to them. As a result, soldiers behave differently depending
+          on their assignment rather than running identical logic,  with dynamic role switching planned next.
+        </p>
+         
         <p class="tech-note">
           <b>Implementation Note:</b> The perception system uses <code>UAISenseConfig_Sight</code>
           with dynamic radius expansion on combat engagement, and <code>UAISenseConfig_Damage</code>
@@ -105,11 +116,11 @@
           Additionally, the strafe task uses <code>NodeMemory</code> for per-enemy state since all 
           soldiers share one task instance.
         </p>
-        <!-- Replace src with your actual squad alert YouTube embed URL -->
+       
         <div class="video-embed">
           <iframe
             src="https://www.youtube.com/embed/plS-NEafSxY"
-            title="Cyborg Soldier AI"
+            title="Cyborg Soldier AI Systems"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen>
           </iframe>
@@ -134,7 +145,7 @@
         being grappled means for them. Adding a new grappable type only requires implementing
         <code>IGrappable</code> with no changes to the hook component itself.
         </p>
-        <!-- Replace with your grappling hook video embed URL -->
+
         <div class="video-embed">
           <iframe
             src="https://www.youtube.com/embed/oCCZd7trLAk"
