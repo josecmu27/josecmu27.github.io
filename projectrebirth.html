@@ -22,8 +22,7 @@
       <p class="hero-sub">A post-apocalyptic action-narrative game </p>
       <div class="ascent-hero-buttons">
         <a href="#systems" class="btn btn-outline">View Systems</a>
-        <!-- Add or remove buttons as needed -->
-        <!-- <a href="YOUR_VIDEO_LINK" target="_blank" rel="noopener" class="btn btn-outline">Watch Demo</a> -->
+        <a href="#overview_video" class="btn btn-outline">Video Overview</a>
       </div>
     </div>
   </div>
@@ -66,11 +65,11 @@
     <h2>Overview</h2>
     <p>
        Project Rebirth is a post apocalyptic action narrative game built by a 12 person team at the
-      CMU Game Creation Society, running on the Unreal Engine.
+       CMU Game Creation Society, running on the Unreal Engine.
     </p>
 
     <p>
-       I joined as a gameplay programmer and a game designer. I was assigned to design and build the puzzles.
+      I joined as a gameplay programmer and a game designer. I was assigned to design and build the puzzles.
       I proposed a balancing puzzle where the player picks up and throws boxes onto scale platforms, shifting
       the balance to raise themselves up and reach new areas. This was also my first project in Unreal Engine 5,
       so a good part of the semester went into learning the engine's actor and component model and its C++
@@ -80,8 +79,6 @@
     <hr class="hud-divider" />
  
     <!-- ── Systems / Features ── -->
-    <!-- Rename this section if "Systems" doesn't fit the project -->
-    <!-- e.g. "Features", "Implementations", "Contributions" -->
     <h2 id="systems">Systems</h2>
  
     <div class="system-grid">
@@ -108,15 +105,6 @@
           interpolated movement so the motion stays smooth and physically grounded.
         </p>
 
-        <p class="tech-note">
-          <b>Implementation Note:</b> Platform movement limits were originally calculated as absolute Z
-          positions. Once a parent platform started moving from balancing, its children's limits became
-          wrong, since they were still anchored to a position that had shifted. I redesigned the limits as
-          relative offsets from each platform's initial position instead, which made them independent of
-          however much the parent had moved.
-        </p>
-
-        <!-- Optional video embed -- delete if not needed -->
         <div class="video-embed">
           <iframe
             src="https://www.youtube.com/embed/x7ugxBqfXpI"
@@ -147,11 +135,10 @@
           independently along the vertical axis. Before any movement happens, the system sweeps ahead of the
           crane base and any held object to check against world geometry, so the crane simply will not move
           into a spot that would clip something it is carrying. Picking an object up is a smooth pull toward
-          an attach point rather than an instant snap, with physics disabled during the pull and re-enabled
+          an attach point with physics disabled during the pull and re-enabled
           the moment the object is released.
         </p>
 
-        <!-- Optional video embed -- delete if not needed -->
         <div class="video-embed">
           <iframe
             src="https://www.youtube.com/embed/bjojPQqM3ZU"
@@ -164,42 +151,23 @@
  
     </div>
  
-    <hr class="hud-divider" />
-
-    <h2>Results</h2>
-
-    <p>
+     <hr class="hud-divider" />
+    <h2 id = "overview_video" >Video Overview</h2>
+        <p>
       Here is a video showing both systems working together. This was the version showcased during the CMU Game Creation
       Society's Release Day Event. 
     </p>
-
-    <!-- Optional video embed -- delete if not needed -->
-        <div class="video-embed">
+     <div class="video-embed">
           <iframe
-            src="https://www.youtube.com/embed/cIuar_IApSE"
-            title="Feature demo"
+            src="https://www.youtube.com/embed/ZKnD9GTUZ-k"
+            title="Project Rebirth Overview"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen>
           </iframe>
         </div>
- 
-   
- 
-    <hr class="hud-divider" />
- 
 
-    <!-- ── Source ── -->
-    <!-- Update or delete the paragraph text as needed -->
-    <!-- Remove the GitHub button if the repo is private -->
-    <h2>Source</h2>
-    <p>
-      This repository contains the specific files I contributed to Project Rebirth, the balance puzzle system
-      and the crane controller.
-    </p>
     
-    <a href="https://github.com/josecmu27/Project-Rebirth" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top: 0.5rem;">
-      View GitHub Repository
-    </a>
+    <hr class="hud-divider" />
  
   </div>
 
